@@ -1,0 +1,7 @@
+videos/
+thumbnails/
+data/
+.env
+.git
+.gitignore
+README.md

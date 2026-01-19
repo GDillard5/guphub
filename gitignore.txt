@@ -1,0 +1,10 @@
+# Data
+videos/
+thumbnails/
+data/*.json
+
+# Environment
+.env
+
+# Build
+server

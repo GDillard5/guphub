@@ -1,0 +1,29 @@
+{{define "login.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="login-page">
+    <main class="login-container">
+        <h1>Enter Password</h1>
+        <form hx-post="/login" hx-swap="none">
+            <input 
+                type="password" 
+                name="password" 
+                placeholder="Password" 
+                autocomplete="current-password"
+                required
+                autofocus
+            >
+            <button type="submit">Enter</button>
+        </form>
+        <p id="error" class="error"></p>
+    </main>
+</body>
+</html>
+{{end}}

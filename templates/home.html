@@ -1,0 +1,18 @@
+{{template "base" .}}
+
+{{define "title"}}Home - Video Site{{end}}
+
+{{define "content"}}
+{{template "home-content.html" .}}
+{{end}}
+
+{{define "home-content.html"}}
+<section class="hero">
+    <h1>Welcome</h1>
+    <p>Browse our video collection.</p>
+    <button hx-get="/partials/video-list" hx-target="#preview" hx-swap="innerHTML">
+        Load Latest Videos
+    </button>
+    <div id="preview"></div>
+</section>
+{{end}}

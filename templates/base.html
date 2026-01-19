@@ -1,0 +1,30 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{block "title" .}}Video Site{{end}}</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <script>
+        document.addEventListener('htmx:beforeSwap', function() {
+            document.querySelectorAll('video').forEach(v => {
+                v.pause();
+                v.src = '';
+                v.load();
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <a href="/videos" hx-get="/videos" hx-target="main" hx-push-url="true">Videos</a>
+        <a href="/upload" hx-get="/upload" hx-target="main" hx-push-url="true">Upload</a>
+    </nav>
+    <main>
+        {{block "content" .}}{{end}}
+    </main>
+</body>
+</html>
+{{end}}

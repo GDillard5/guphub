@@ -1,0 +1,43 @@
+{{define "video-list.html"}}
+<ul class="video-list">
+    {{range .}}
+    <li class="video-item">
+        <div class="video-container" data-src="/videos/{{.Filename}}">
+            {{if .Thumbnail}}
+            <img src="/thumbnails/{{.Thumbnail}}" alt="{{.Title}}" class="thumbnail" loading="lazy">
+            {{else}}
+            <div class="thumbnail-placeholder"></div>
+            {{end}}
+            <button class="play-btn" aria-label="Play video">▶</button>
+        </div>
+        <div class="video-info">
+            <span class="video-title">{{.Title}}</span>
+            <div class="video-tags">
+                {{if .Game}}<span class="tag tag-game">{{.Game}}</span>{{end}}
+                {{range .People}}<span class="tag tag-person">{{.}}</span>{{end}}
+            </div>
+        </div>
+    </li>
+    {{else}}
+    <li class="no-videos">No videos yet. <a href="/upload">Upload one!</a></li>
+    {{end}}
+</ul>
+
+<script>
+document.querySelectorAll('.video-container').forEach(container => {
+    container.addEventListener('click', function() {
+        const src = this.dataset.src;
+        if (!src) return;
+        
+        const video = document.createElement('video');
+        video.controls = true;
+        video.autoplay = true;
+        video.src = src;
+        
+        this.innerHTML = '';
+        this.appendChild(video);
+        this.removeAttribute('data-src');
+    });
+});
+</script>
+{{end}}

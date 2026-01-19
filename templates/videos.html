@@ -1,0 +1,43 @@
+{{template "base" .}}
+
+{{define "title"}}Home - Videos{{end}}
+
+{{define "content"}}
+{{template "videos-content.html" .}}
+{{end}}
+
+{{define "videos-content.html"}}
+<section class="videos-page">
+    <h1>Videos</h1>
+    
+    <div class="filters">
+        <div class="filter-group">
+            <label for="filter-game">Game</label>
+            <select id="filter-game" name="game" hx-get="/partials/video-list" hx-target="#video-grid" hx-include=".filter-select">
+                <option value="">All Games</option>
+                {{range .Tags.Games}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="filter-person">Person</label>
+            <select id="filter-person" name="person" class="filter-select" hx-get="/partials/video-list" hx-target="#video-grid" hx-include="#filter-game">
+                <option value="">All People</option>
+                {{range .Tags.People}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+            </select>
+        </div>
+        
+        <button class="filter-reset" onclick="document.getElementById('filter-game').value=''; document.getElementById('filter-person').value=''; htmx.trigger('#filter-game', 'change');">
+            Reset
+        </button>
+    </div>
+    
+    <div id="video-grid" hx-get="/partials/video-list" hx-trigger="load" hx-swap="innerHTML">
+        Loading...
+    </div>
+</section>
+{{end}}

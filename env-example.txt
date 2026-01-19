@@ -1,0 +1,11 @@
+# Server
+PORT=8080
+PASSWORD=changeme
+
+# Paths (defaults work for Docker)
+VIDEO_DIR=./videos
+THUMBNAIL_DIR=./thumbnails
+STATIC_DIR=./static
+TEMPLATES_DIR=./templates
+DATA_FILE=./data/videos.json
+TAGS_FILE=./data/tags.json

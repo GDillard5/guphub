@@ -1,0 +1,126 @@
+{{template "base" .}}
+
+{{define "title"}}Upload Video{{end}}
+
+{{define "content"}}
+{{template "upload-content.html" .}}
+{{end}}
+
+{{define "upload-content.html"}}
+<section class="upload-page">
+    <h1>Upload Video</h1>
+    <form id="upload-form" class="upload-form">
+        <div class="form-group">
+            <label for="video">Video File (max 3GB)</label>
+            <input type="file" id="video" name="video" accept="video/*" required>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Enter video title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="game">Game</label>
+            <select id="game" name="game">
+                <option value="">-- None --</option>
+                {{range .Games}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="people">People</label>
+            <select id="people" name="people" multiple>
+                {{range .People}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+            </select>
+            <small>Hold Ctrl/Cmd to select multiple</small>
+        </div>
+
+        <div id="progress-container" class="progress-container" style="display:none;">
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+            <span id="progress-text" class="progress-text">0%</span>
+        </div>
+
+        <button type="submit" id="submit-btn">Upload</button>
+        <div id="upload-error" class="error"></div>
+    </form>
+</section>
+
+<script>
+document.getElementById('upload-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const fileInput = document.getElementById('video');
+    const titleInput = document.getElementById('title');
+    const gameSelect = document.getElementById('game');
+    const peopleSelect = document.getElementById('people');
+    const progressContainer = document.getElementById('progress-container');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const submitBtn = document.getElementById('submit-btn');
+    const errorDiv = document.getElementById('upload-error');
+    
+    if (!fileInput.files[0]) {
+        errorDiv.textContent = 'Please select a video file';
+        return;
+    }
+    
+    if (!titleInput.value.trim()) {
+        errorDiv.textContent = 'Please enter a title';
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('video', fileInput.files[0]);
+    formData.append('title', titleInput.value);
+    formData.append('game', gameSelect.value);
+    
+    for (const option of peopleSelect.selectedOptions) {
+        formData.append('people', option.value);
+    }
+    
+    const xhr = new XMLHttpRequest();
+    
+    xhr.upload.addEventListener('progress', function(e) {
+        if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            progressFill.style.width = percent + '%';
+            progressText.textContent = percent + '%';
+        }
+    });
+    
+    xhr.addEventListener('load', function() {
+        if (xhr.status === 200 || xhr.status === 303) {
+            window.location.href = '/videos';
+        } else {
+            errorDiv.textContent = 'Upload failed: ' + xhr.statusText;
+            submitBtn.disabled = false;
+            progressContainer.style.display = 'none';
+        }
+    });
+    
+    xhr.addEventListener('error', function() {
+        errorDiv.textContent = 'Upload failed. Please try again.';
+        submitBtn.disabled = false;
+        progressContainer.style.display = 'none';
+    });
+    
+    xhr.open('POST', '/upload');
+    
+    errorDiv.textContent = '';
+    progressContainer.style.display = 'block';
+    progressFill.style.width = '0%';
+    progressText.textContent = '0%';
+    submitBtn.disabled = true;
+    
+    xhr.send(formData);
+});
+</script>
+{{end}}
