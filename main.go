@@ -104,9 +104,8 @@ func LoadTagOptions(path string) (TagOptions, error) {
 			// Return defaults if file doesn't exist
 			log.Printf("tags.json not found, using defaults")
 			return TagOptions{
-				Games:  []string{"Marvel Rivals","Balatro","Arc Raiders","Risk of Rain", "IRL","Minecraft", "Counter-Strike","Elden Ring","Overwatch 2","Call of Duty","Factorio","Baldur's Gate 3","Peak","Hollow Knight","Lies of P","REPO"},
-    
-				People: []string{"Michael","Hunter","Tony","Kevin","Ricci","Christian", "Grant","Cullen"},
+				Games:  []string{"Minecraft", "Valorant", "CS2", "League of Legends", "Fortnite", "Apex Legends"},
+				People: []string{"Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"},
 			}, nil
 		}
 		return opts, err
@@ -381,8 +380,8 @@ func (s *Server) handleUploadPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleUploadSubmit(w http.ResponseWriter, r *http.Request) {
-	// Limit to 3GB
-	r.Body = http.MaxBytesReader(w, r.Body, 3<<30)
+	// Limit to 10GB
+	r.Body = http.MaxBytesReader(w, r.Body, 10<<30)
 
 	// Parse multipart form with 32MB memory buffer (rest goes to disk)
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
