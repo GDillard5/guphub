@@ -104,7 +104,22 @@ func LoadTagOptions(path string) (TagOptions, error) {
 			// Return defaults if file doesn't exist
 			log.Printf("tags.json not found, using defaults")
 			return TagOptions{
-				Games:  []string{"Minecraft", "Valorant", "CS2", "League of Legends", "Fortnite", "Apex Legends"},
+				Games:  []string{"Marvel Rivals",
+    "Balatro",
+    "Arc Raiders",
+    "Risk of Rain",
+    "IRL",
+    "Minecraft",
+    "Counter-Strike",
+    "Elden Ring",
+    "Overwatch 2",
+    "Call of Duty",
+    "Factorio",
+    "Baldur's Gate 3",
+    "Peak",
+    "Hollow Knight",
+    "Lies of P",
+    "REPO"},
 				People: []string{"Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"},
 			}, nil
 		}
