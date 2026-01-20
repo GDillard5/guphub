@@ -120,7 +120,16 @@ func LoadTagOptions(path string) (TagOptions, error) {
     "Hollow Knight",
     "Lies of P",
     "REPO"},
-				People: []string{"Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"},
+				People: []string{"Michael",
+    "Hunter",
+    "Tony",
+    "Kevin",
+    "Dylan",
+    "Ricci",
+    "Christian",
+    "Grant",
+    "Cullen",
+    "Josh"},
 			}, nil
 		}
 		return opts, err
