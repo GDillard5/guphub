@@ -100,6 +100,14 @@ func LoadTagOptions(path string) (TagOptions, error) {
 	var opts TagOptions
 	data, err := os.ReadFile(path)
 	if err != nil {
+		if os.IsNotExist(err) {
+			// Return defaults if file doesn't exist
+			log.Printf("tags.json not found, using defaults")
+			return TagOptions{
+				Games:  []string{"Minecraft", "Valorant", "CS2", "League of Legends", "Fortnite", "Apex Legends"},
+				People: []string{"Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"},
+			}, nil
+		}
 		return opts, err
 	}
 	err = json.Unmarshal(data, &opts)
