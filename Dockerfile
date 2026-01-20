@@ -26,4 +26,3 @@ RUN mkdir -p /app/data /app/videos /app/thumbnails
 EXPOSE 8080
 
 CMD ["./server"]
-EOF
