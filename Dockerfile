@@ -19,9 +19,10 @@ WORKDIR /app
 COPY --from=builder /app/server .
 COPY templates/ ./templates/
 COPY static/ ./static/
+COPY data/tags.json ./data/tags.json
 
-# Create data directories
-RUN mkdir -p /app/data /app/videos /app/thumbnails
+# Create directories for uploads
+RUN mkdir -p /app/videos /app/thumbnails
 
 EXPOSE 8080
 
